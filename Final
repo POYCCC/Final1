@@ -1,0 +1,40 @@
+import java.util.Scanner;
+import java.util.Random;
+public class Game {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        Random r = new Random();
+        String[] words = {"scanner", "random", "calendar", "arrays", "date", "game", "length", "print", "classroom", "loveyou"};
+        char game;
+        do {
+            int length = r.nextInt(words.length);
+            String word = words[length];
+            StringBuilder guess = new StringBuilder();
+            guess.append("*".repeat(word.length()));
+            int yes = 0, no = 0;
+            while (yes < word.length()) {
+                System.out.println("Guess a sentence：" + guess);
+                System.out.print("Enter a letter：");
+                char letter = input.next().charAt(0);
+                if (guess.indexOf(String.valueOf(letter)) >= 0)
+                    System.out.println( letter + " In the sentence");
+                else if (word.indexOf(letter) < 0) {
+                    System.out.println( letter + " not in sentence");
+                    no++;
+                }
+                else {
+                    int index = word.indexOf(letter);
+                    while (index >= 0) {
+                        guess.setCharAt(index, letter);
+                        yes++;
+                        index = word.indexOf(letter, index + 1);
+                    }
+                }
+            }
+            System.out.println("The sentence is：" + word);
+            System.out.print("Continue to try（Y / N）：");
+            game = input.next().charAt(0);
+        } while (game == 'Y');
+    }
+}
+
